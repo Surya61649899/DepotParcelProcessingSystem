@@ -1,0 +1,4 @@
+Customer John Doe collected parcel P001. Fee: $157.05
+Customer Jane Smith collected parcel P002. Fee: $66.14999999999999
+Customer Emily Davis collected parcel P003. Fee: $277.59999999999997
+Customer Antonio collected parcel P004. Fee: $153.7
