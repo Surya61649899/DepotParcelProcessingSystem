@@ -94,8 +94,6 @@ public class Manager {
     }
     
     
-    
- // Create the GUI for the application
     private void createGUI() {
         frame = new JFrame("Package Depot");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -159,7 +157,7 @@ public class Manager {
         currentPackageScrollPane.setBorder(BorderFactory.createTitledBorder("Current Package"));
 
         // Split Panes for Layout
-        JSplitPane splitPane1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, packageScrollPane, customerScrollPane);
+        JSplitPane splitPane1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, customerScrollPane, packageScrollPane);
         splitPane1.setDividerLocation(500);
         JSplitPane splitPane2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, splitPane1, currentPackageScrollPane);
         splitPane2.setDividerLocation(900);
@@ -281,10 +279,11 @@ public class Manager {
         frame.add(statusBar, BorderLayout.SOUTH);
 
         // Adding Panels to Frame
-        frame.add(formPanel, BorderLayout.NORTH);
+        frame.add(formPanel, BorderLayout.SOUTH);
         frame.add(centerPanel, BorderLayout.CENTER);
         frame.setVisible(true);
     }
+
 
 
     private void updateParcelTextArea() {
