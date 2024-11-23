@@ -166,13 +166,13 @@ public class Manager {
         processButton = new JButton("Process Next Customer");
         processButton.setToolTipText("Click to process the next customer in the queue");
         processButton.setFont(new Font("Arial", Font.BOLD, 16));
-        processButton.setBackground(Color.CYAN);
+        processButton.setBackground(new Color(76, 175, 80));  // Green Color
         processButton.setFocusPainted(false);
         processButton.addActionListener(e -> startProcessing());
 
         // Package Form Panel
         JPanel packageFormPanel = new JPanel();
-        packageFormPanel.setLayout(new GridLayout(8, 2, 15, 15));
+        packageFormPanel.setLayout(new BoxLayout(packageFormPanel, BoxLayout.Y_AXIS));
         packageFormPanel.setBorder(BorderFactory.createTitledBorder("Add Package"));
         JTextField packageIDField = new JTextField();
         JTextField daysInDepotField = new JTextField();
@@ -183,7 +183,7 @@ public class Manager {
 
         JButton addPackageButton = new JButton("Add Package");
         addPackageButton.setFont(new Font("Arial", Font.BOLD, 14));
-        addPackageButton.setBackground(Color.GREEN);
+        addPackageButton.setBackground(new Color(76, 175, 80)); // Green Color
         addPackageButton.setFocusPainted(false);
         addPackageButton.addActionListener(e -> {
             try {
@@ -220,12 +220,11 @@ public class Manager {
         packageFormPanel.add(widthField);
         packageFormPanel.add(new JLabel("Height:"));
         packageFormPanel.add(heightField);
-        packageFormPanel.add(new JLabel(""));
         packageFormPanel.add(addPackageButton);
 
         // Customer Form Panel
         JPanel customerFormPanel = new JPanel();
-        customerFormPanel.setLayout(new GridLayout(5, 2, 15, 15));
+        customerFormPanel.setLayout(new BoxLayout(customerFormPanel, BoxLayout.Y_AXIS));
         customerFormPanel.setBorder(BorderFactory.createTitledBorder("Add Customer"));
         JTextField queueNumberField = new JTextField();
         JTextField customerNameField = new JTextField();
@@ -233,7 +232,7 @@ public class Manager {
 
         JButton addCustomerButton = new JButton("Add Customer");
         addCustomerButton.setFont(new Font("Arial", Font.BOLD, 14));
-        addCustomerButton.setBackground(Color.ORANGE);
+        addCustomerButton.setBackground(new Color(76, 175, 80)); // Green Color
         addCustomerButton.setFocusPainted(false);
         addCustomerButton.addActionListener(e -> {
             try {
@@ -258,12 +257,11 @@ public class Manager {
         customerFormPanel.add(customerNameField);
         customerFormPanel.add(new JLabel("Package ID:"));
         customerFormPanel.add(packageIDForCustomerField);
-        customerFormPanel.add(new JLabel(""));
         customerFormPanel.add(addCustomerButton);
 
         // Form Panel for Both Sections
         JPanel formPanel = new JPanel();
-        formPanel.setLayout(new GridLayout(1, 2, 30, 0));
+        formPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 30, 20));
         formPanel.add(packageFormPanel);
         formPanel.add(customerFormPanel);
 
