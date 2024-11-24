@@ -93,7 +93,6 @@ public class Manager {
         log.writeLogToFile("log.txt");
     }
     
-    
     private void createGUI() {
         frame = new JFrame("Package Depot");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -113,7 +112,7 @@ public class Manager {
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
         JMenuItem loadPackages = new JMenuItem("Load Packages");
-        loadPackages.addActionListener(e -> initializeParcels("packages.txt"));
+        loadPackages.addActionListener(e -> initializeParcels("parcels.txt"));
         JMenuItem loadClients = new JMenuItem("Load Clients");
         loadClients.addActionListener(e -> initializeCustomers("customers.txt"));
         JMenuItem exitItem = new JMenuItem("Exit");
@@ -146,7 +145,7 @@ public class Manager {
         customerTextArea.setFont(new Font("Monospaced", Font.PLAIN, 14));
         customerTextArea.setMargin(new Insets(10, 10, 10, 10));
         JScrollPane customerScrollPane = new JScrollPane(customerTextArea);
-        customerScrollPane.setBorder(BorderFactory.createTitledBorder("Customers"));
+        customerScrollPane.setBorder(BorderFactory.createTitledBorder("Clients"));
 
         // Current Package Display Area
         currentParcelTextArea = new JTextArea();
@@ -163,27 +162,32 @@ public class Manager {
         splitPane2.setDividerLocation(900);
 
         // Process Button for Customer Processing
-        processButton = new JButton("Process Next Customer");
+        processButton = new JButton("Process Next Client");
         processButton.setToolTipText("Click to process the next customer in the queue");
         processButton.setFont(new Font("Arial", Font.BOLD, 16));
         processButton.setBackground(new Color(76, 175, 80));  // Green Color
+        processButton.setForeground(Color.WHITE);  // Set text color to white
         processButton.setFocusPainted(false);
         processButton.addActionListener(e -> startProcessing());
 
         // Package Form Panel
-        JPanel packageFormPanel = new JPanel();
-        packageFormPanel.setLayout(new BoxLayout(packageFormPanel, BoxLayout.Y_AXIS));
+        JPanel packageFormPanel = new JPanel(new GridBagLayout());
         packageFormPanel.setBorder(BorderFactory.createTitledBorder("Add Package"));
-        JTextField packageIDField = new JTextField();
-        JTextField daysInDepotField = new JTextField();
-        JTextField weightField = new JTextField();
-        JTextField lengthField = new JTextField();
-        JTextField widthField = new JTextField();
-        JTextField heightField = new JTextField();
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        JTextField packageIDField = new JTextField(20);
+        JTextField daysInDepotField = new JTextField(20);
+        JTextField weightField = new JTextField(20);
+        JTextField lengthField = new JTextField(20);
+        JTextField widthField = new JTextField(20);
+        JTextField heightField = new JTextField(20);
 
         JButton addPackageButton = new JButton("Add Package");
         addPackageButton.setFont(new Font("Arial", Font.BOLD, 14));
         addPackageButton.setBackground(new Color(76, 175, 80)); // Green Color
+        addPackageButton.setForeground(Color.WHITE);  // Set text color to white
         addPackageButton.setFocusPainted(false);
         addPackageButton.addActionListener(e -> {
             try {
@@ -208,31 +212,33 @@ public class Manager {
             }
         });
 
-        packageFormPanel.add(new JLabel("Package ID:"));
-        packageFormPanel.add(packageIDField);
-        packageFormPanel.add(new JLabel("Days in Depot:"));
-        packageFormPanel.add(daysInDepotField);
-        packageFormPanel.add(new JLabel("Weight:"));
-        packageFormPanel.add(weightField);
-        packageFormPanel.add(new JLabel("Length:"));
-        packageFormPanel.add(lengthField);
-        packageFormPanel.add(new JLabel("Width:"));
-        packageFormPanel.add(widthField);
-        packageFormPanel.add(new JLabel("Height:"));
-        packageFormPanel.add(heightField);
-        packageFormPanel.add(addPackageButton);
+        // Add fields and labels to the package form panel
+        addFieldToPanel(packageFormPanel, gbc, "Package ID:", packageIDField, 0);
+        addFieldToPanel(packageFormPanel, gbc, "Days in Depot:", daysInDepotField, 1);
+        addFieldToPanel(packageFormPanel, gbc, "Weight:", weightField, 2);
+        addFieldToPanel(packageFormPanel, gbc, "Length:", lengthField, 3);
+        addFieldToPanel(packageFormPanel, gbc, "Width:", widthField, 4);
+        addFieldToPanel(packageFormPanel, gbc, "Height:", heightField, 5);
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+        gbc.gridwidth = 2;
+        packageFormPanel.add(addPackageButton, gbc);
 
         // Customer Form Panel
-        JPanel customerFormPanel = new JPanel();
-        customerFormPanel.setLayout(new BoxLayout(customerFormPanel, BoxLayout.Y_AXIS));
-        customerFormPanel.setBorder(BorderFactory.createTitledBorder("Add Customer"));
-        JTextField queueNumberField = new JTextField();
-        JTextField customerNameField = new JTextField();
-        JTextField packageIDForCustomerField = new JTextField();
+        JPanel customerFormPanel = new JPanel(new GridBagLayout());
+        customerFormPanel.setBorder(BorderFactory.createTitledBorder("Add Client"));
+        GridBagConstraints gbc2 = new GridBagConstraints();
+        gbc2.insets = new Insets(5, 5, 5, 5);
+        gbc2.fill = GridBagConstraints.HORIZONTAL;
 
-        JButton addCustomerButton = new JButton("Add Customer");
+        JTextField queueNumberField = new JTextField(20);
+        JTextField customerNameField = new JTextField(20);
+        JTextField packageIDForCustomerField = new JTextField(20);
+
+        JButton addCustomerButton = new JButton("Add Client");
         addCustomerButton.setFont(new Font("Arial", Font.BOLD, 14));
         addCustomerButton.setBackground(new Color(76, 175, 80)); // Green Color
+        addCustomerButton.setForeground(Color.WHITE);  // Set text color to white
         addCustomerButton.setFocusPainted(false);
         addCustomerButton.addActionListener(e -> {
             try {
@@ -251,17 +257,17 @@ public class Manager {
             }
         });
 
-        customerFormPanel.add(new JLabel("Queue Number:"));
-        customerFormPanel.add(queueNumberField);
-        customerFormPanel.add(new JLabel("Customer Name:"));
-        customerFormPanel.add(customerNameField);
-        customerFormPanel.add(new JLabel("Package ID:"));
-        customerFormPanel.add(packageIDForCustomerField);
-        customerFormPanel.add(addCustomerButton);
+        // Add fields and labels to the customer form panel
+        addFieldToPanel(customerFormPanel, gbc2, "Queue Number:", queueNumberField, 0);
+        addFieldToPanel(customerFormPanel, gbc2, "Client Name:", customerNameField, 1);
+        addFieldToPanel(customerFormPanel, gbc2, "Package ID:", packageIDForCustomerField, 2);
+        gbc2.gridx = 0;
+        gbc2.gridy = 3;
+        gbc2.gridwidth = 2;
+        customerFormPanel.add(addCustomerButton, gbc2);
 
         // Form Panel for Both Sections
-        JPanel formPanel = new JPanel();
-        formPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 30, 20));
+        JPanel formPanel = new JPanel(new GridLayout(1, 2, 30, 20));
         formPanel.add(packageFormPanel);
         formPanel.add(customerFormPanel);
 
@@ -279,9 +285,18 @@ public class Manager {
         // Adding Panels to Frame
         frame.add(formPanel, BorderLayout.SOUTH);
         frame.add(centerPanel, BorderLayout.CENTER);
+
         frame.setVisible(true);
     }
 
+    // Helper method to add fields and labels to a panel
+    private void addFieldToPanel(JPanel panel, GridBagConstraints gbc, String label, JTextField textField, int yPos) {
+        gbc.gridx = 0;
+        gbc.gridy = yPos;
+        panel.add(new JLabel(label), gbc);
+        gbc.gridx = 1;
+        panel.add(textField, gbc);
+    }
 
 
     private void updateParcelTextArea() {
